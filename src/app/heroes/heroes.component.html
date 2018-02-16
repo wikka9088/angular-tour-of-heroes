@@ -1,11 +1,14 @@
-<h2>{{ selectHero.name | uppercase }} Details</h2>
-<div><span><i></i>d: </span>{{ selectHero.id }}</div>
+<div *ngif="selectHero">
+    <h2>{{ selectHero.name | uppercase }} Details</h2>
+    <div><span><i></i>d: </span>{{ selectHero.id }}</div>
 
-<div>
-    <label>name:
-        <input [(ngModel)]="selectHero.name" placeholder="name">
-    </label>
+    <div>
+        <label>name:
+            <input [(ngModel)]="selectHero.name" placeholder="name">
+        </label>
+    </div>
 </div>
+
 
 
 <h2>My Heroes</h2>
