@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {RouterModule, Routes} from "@angular/router";
 import {HeroesComponent} from "./heroes/heroes.component";
+import {DashboardComponent} from "./dashboard/dashboard.component";
 
 @NgModule({
     //Add an @NgModule.exports array with RouterModule in it.
@@ -21,6 +22,8 @@ import {HeroesComponent} from "./heroes/heroes.component";
 })
 
 const routes: Routes = [
-    {path: 'heroes', component: HeroesComponent}
+    {path: 'heroes', component: HeroesComponent},
+    {path: 'dashboard', component: DashboardComponent},
+    {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
 ];
 export class AppRoutingModule { }
