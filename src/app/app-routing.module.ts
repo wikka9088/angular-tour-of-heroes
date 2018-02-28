@@ -5,6 +5,13 @@ import {HeroesComponent} from "./heroes/heroes.component";
 import {DashboardComponent} from "./dashboard/dashboard.component";
 import {HeroDetailComponent} from "./hero-detail/hero-detail.component";
 
+const routes: Routes = [
+    {path: 'heroes', component: HeroesComponent},
+    {path: 'dashboard', component: DashboardComponent},
+    {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
+    {path: 'detail/:id', component: HeroDetailComponent},
+];
+
 @NgModule({
     //Add an @NgModule.exports array with RouterModule in it.
     //Exporting RouterModule makes router directives available for use in the AppModule components that will need them.
@@ -22,10 +29,5 @@ import {HeroDetailComponent} from "./hero-detail/hero-detail.component";
   // declarations: [],
 })
 
-const routes: Routes = [
-    {path: 'heroes', component: HeroesComponent},
-    {path: 'dashboard', component: DashboardComponent},
-    {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
-    {path: 'detail/:id', component: HeroDetailComponent},
-];
+
 export class AppRoutingModule { }
