@@ -9,7 +9,11 @@ import { catchError, map, tap } from 'rxjs/operators'; //
 
 @Injectable()
 export class HeroService {
+    const httpOptions = {
+        headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
     private heroesUrl = 'api/heroes'; // URL to web api
+
     constructor(private http: HttpClient, private messageService: MessageService) {
 
     }
@@ -39,6 +43,15 @@ export class HeroService {
      */
     private log(message: string) {
         this.messageService.add('HeroService: ' + message);
+    }
+
+
+    updateHero(hero: Hero): Observable<any> {
+        return this.http.put(this.heroesUrl, hero, httpOptions)
+            .pipe(
+                tap(_ => this.log(`updated hero id=${hero.id}`)),
+                catchError(this.handleError<any>('updateHero')),
+            )
     }
 
 }
