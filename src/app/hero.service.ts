@@ -6,13 +6,15 @@ import {of} from "rxjs/observable/of";
 import {MessageService} from './message.service';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
-import {pipe} from "rxjs"; //
+import {pipe} from "rxjs";
+
+const httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 
 @Injectable()
 export class HeroService {
-    const httpOptions = {
-        headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-    };
+
     private heroesUrl = 'api/heroes'; // URL to web api
 
     constructor(private http: HttpClient, private messageService: MessageService) {
@@ -75,7 +77,7 @@ export class HeroService {
     }
 
     /* GET heroes whose name contains search term */
-    searchHero(term: string): Observable<Hero[]> {
+    searchHeroes(term: string): Observable<Hero[]> {
         if (!term.trim()) {
             return of([]);
         }
@@ -84,6 +86,28 @@ export class HeroService {
                 tap(_ => this.log(`found heroes matching "${term}"`)),
                 catchError(this.handleError<Hero[]>('searchHeroes', []))
             )
+    }
+
+
+
+    /**
+     * Handle Http operation that failed.
+     * Let the app continue.
+     * @param operation - name of the operation that failed
+     * @param result - optional value to return as the observable result
+     */
+    private handleError<T> (operation = 'operation', result?: T) {
+        return (error: any): Observable<T> => {
+
+            // TODO: send the error to remote logging infrastructure
+            console.error(error); // log to console instead
+
+            // TODO: better job of transforming error for user consumption
+            this.log(`${operation} failed: ${error.message}`);
+
+            // Let the app keep running by returning an empty result.
+            return of(result as T);
+        };
     }
 
 }
