@@ -5,7 +5,8 @@ import {Observable} from 'rxjs/Observable';
 import {of} from "rxjs/observable/of";
 import {MessageService} from './message.service';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import { catchError, map, tap } from 'rxjs/operators'; //
+import { catchError, map, tap } from 'rxjs/operators';
+import {pipe} from "rxjs"; //
 
 @Injectable()
 export class HeroService {
@@ -59,6 +60,17 @@ export class HeroService {
             .pipe(
                 tap((hero: Hero) => this.log(`added hero w/ id=${hero.id}`)),
                 catchError(this.handleError<Hero>('addHero'))
+            )
+    }
+
+    deleteHero(hero: Hero | number): Observable<Hero> {
+        const id = typeof hero === 'number' ? hero : hero.id;
+        const url = `${this.heroesUrl}/${id}`;
+
+        return this.http.delete<Hero>(url, httpOptions)
+            .pipe(
+                tap(_ => this.log(`deleted hero id=${id}`)),
+                catchError(this.handleError<Hero>('deleteHero'))
             )
     }
 
